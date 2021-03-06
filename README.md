@@ -1,2 +1,4 @@
-# cmdboss
-configuration management for the people
+![cmdboss](cmdboss.PNG)
+
+makes configuration management better
+
