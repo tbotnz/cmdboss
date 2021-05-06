@@ -3,11 +3,12 @@
 a **hooky** rest based nosql database that makes configuration management better
 
 ### core features
-- Model driven ReST API backed by a noSQLDB (Mongo) with a Pydantic Validation
+- Model driven ReST API built on FastAPI backed by a noSQLDB (Mongo)
+- BYO Pydantic Models @ Runtime over the rest interface
 - Self generating swagger documenting Endpoints for CRUD operations for all user defined models
 - Custom Middleware Layer providing async hook capability on DB CRUD operations
 - BYO Python Hooks
-- BYO Pydantic Models
+
 
 ### getting started
 - git clone the project ``` https://github.com/tbotnz/cmdboss.git ```
