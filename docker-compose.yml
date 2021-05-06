@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+
+  cmdboss:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "9000:9000"
+    networks:
+      - "cmdboss-network"
+    depends_on:
+      - mongo
+    restart: always
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+        - "cmdboss-network"
+
+networks:
+
+  cmdboss-network:
+    name: "cmdboss-network"

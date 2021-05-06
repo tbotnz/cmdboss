@@ -1,0 +1,15 @@
+{
+    "mongo_server_ip":"10.0.2.15",
+    "mongo_server_port":27017,
+    "mongo_user":"root",
+    "mongo_password":"root",
+    "api_key_name": "x-api-key",
+    "api_key": "2a84465a-cf38-46b2-9d86-b84Q7d57f288",
+    "gunicorn_workers": 1,
+    "cmdboss_http_https": "http",
+    "cmdboss_listen_ip": "0.0.0.0",
+    "cmdboss_listen_port": 9000,
+    "model_dir": "extensibles/models/",
+    "hook_dir": "extensibles/hooks/",
+    "log_config_filename": "log-config.yml"
+}

@@ -1,0 +1,10 @@
+fastapi==0.63.0
+pydantic==1.8.1
+uvicorn==0.13.4
+uvloop==0.15.2
+gunicorn==20.0.4
+aiofiles==0.6.0
+httptools==0.1.1
+pymongo==3.11.4
+pyyaml==5.4.1
+httpx==0.17.0
