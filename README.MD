@@ -1,6 +1,6 @@
 ![cmdboss](cmdboss.PNG)
 
-ReST based nosql database with byo models + hooks that makes configuration management better
+**ReST based nosql database with byo models + hooks that makes configuration management better**
 
 ![cmdboss](cboss-1.gif)
 
