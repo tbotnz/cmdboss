@@ -21,5 +21,5 @@
 - download the online [postman collection](https://documenter.getpostman.com/view/2391814/TzRPjV5h)
 
 
-#### note
-alpha
+#### Roadmap
+- GUI for real time model editing
