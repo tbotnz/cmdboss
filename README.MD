@@ -1,6 +1,6 @@
 ![cmdboss](cmdboss.PNG)
 
-a hooky rest based nosql database that makes configuration management better
+a **hooky** rest based nosql database that makes configuration management better
 
 ### core features
 - Model driven ReST API backed by a noSQLDB (Mongo) with a Pydantic Validation
