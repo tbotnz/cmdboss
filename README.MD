@@ -25,3 +25,5 @@
 #### Roadmap
 - GUI for real time model editing
 - Add Authorisation
+
+You can also find us in the channel #cmdboss on the networktocode Slack.
