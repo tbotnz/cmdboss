@@ -17,3 +17,6 @@ a **hooky** rest based nosql database that makes configuration management better
 - access swagger via ```http://127.0.0.1:9000/docs```
 - download the online [postman collection](https://documenter.getpostman.com/view/2391814/TzRPjV5h)
 
+
+#### note
+alpha
