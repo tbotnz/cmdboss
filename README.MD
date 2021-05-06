@@ -20,6 +20,7 @@
 - access swagger via ```http://127.0.0.1:9000/docs```
 - download the online [postman collection](https://documenter.getpostman.com/view/2391814/TzRPjV5h)
 
+![pman](cboss-pman.PNG)
 
 #### Roadmap
 - GUI for real time model editing
