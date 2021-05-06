@@ -2,7 +2,7 @@
 
 a hooky rest based nosql database that makes configuration management better
 
-### features
+### core features
 - Model driven ReST API backed by a noSQLDB (Mongo) with a Pydantic Validation
 - Self generating swagger documenting Endpoints for CRUD operations for all user defined models
 - Custom Middleware Layer providing async hook capability on DB CRUD operations
