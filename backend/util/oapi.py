@@ -1,5 +1,4 @@
 import logging
-import httpx
 import socket
 
 from fastapi.openapi.utils import get_openapi
@@ -24,21 +23,3 @@ def custom_openapi(app):
     }
     app.openapi_schema = openapi_schema
     return app.openapi_schema
-
-
-def reload_routes():
-    log.info("reload_routes: model change occuring")
-    headers = {
-        config.api_key_name: config.api_key,
-        "Content-Type": "application/json"
-    }
-    hostname = socket.gethostname()
-    r = httpx.post(
-                f"{config.cmdboss_http_https}://{hostname}:{config.listen_port}/refresh",
-                timeout=30,
-                headers=headers,
-                verify=False,
-                data={}
-                )
-    print(r.status_code)
-    log.info("reload_routes: model change complete")

@@ -7,4 +7,4 @@ aiofiles==0.6.0
 httptools==0.1.1
 pymongo==3.11.4
 pyyaml==5.4.1
-httpx==0.17.0
+requests==2.25.1

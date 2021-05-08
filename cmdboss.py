@@ -45,7 +45,7 @@ app.include_router(usr_models.router, dependencies=[Depends(get_api_key)])
 custom_openapi(app)
 
 
-@app.post("/reload-models", include_in_schema=False, status_code=201)
+@app.post("/reload-models", status_code=201)
 async def refresh():
     reload_models()
     importlib.reload(usr_models)

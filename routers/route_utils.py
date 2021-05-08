@@ -16,8 +16,6 @@ log = logging.getLogger(__name__)
 
 
 class SyncAsyncDecoratorFactory:
-    """Courtesy of StackOverflow & Github user https://gist.github.com/anatoly-kussul
-    https://gist.github.com/anatoly-kussul/f2d7444443399e51e2f83a76f112364d/ff1f94b1bd07741ce209cc61832f920adb49aedf"""
 
     @contextmanager
     def wrapper(self, func, *args, **kwargs):

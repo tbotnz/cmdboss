@@ -11,5 +11,6 @@
     "cmdboss_listen_port": 9000,
     "model_dir": "extensibles/models/",
     "hook_dir": "extensibles/hooks/",
-    "log_config_filename": "log-config.yml"
+    "log_config_filename": "log-config.yml",
+    "num_thread_workers": 20
 }
