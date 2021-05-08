@@ -27,5 +27,6 @@
 - Add Endpoint Authorisation
 - Automate reloading of models
 - GraphQL support
+- Implement threadpooling
 
 You can also find us in the channel #cmdboss on the networktocode Slack.
