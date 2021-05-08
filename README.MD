@@ -1,6 +1,13 @@
-![cmdboss](cmdboss-1.PNG)
 
-**ReST based nosql database with byo models + hooks that makes configuration management better**
+
+<p align="center">
+   <br/>
+   <img src="/cmdboss-1.PNG" />
+   <br/>
+   <p align="center">
+    ReST based nosql database with byo models + hooks that makes configuration management better
+   </p> 
+</p>
 
 ![cmdboss](cboss-1.gif)
 
