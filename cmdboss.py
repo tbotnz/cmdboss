@@ -10,6 +10,7 @@ from backend.util.exceptions import (
     CMDBOSSHTTPException
 )
 from backend.util.oapi import custom_openapi
+from backend.util.model_loader import reload_models
 
 from routers import (
     system,
@@ -18,9 +19,11 @@ from routers import (
 
 config.setup_logging(max_debug=True)
 
+
 app = FastAPI()
 
 app.include_router(system.router, dependencies=[Depends(get_api_key)])
+
 
 @app.exception_handler(CMDBOSSHTTPException)
 async def unicorn_exception_handler(
@@ -35,10 +38,16 @@ async def unicorn_exception_handler(
                             },
                         )
 
+
+reload_models()
+importlib.reload(usr_models)
+app.include_router(usr_models.router, dependencies=[Depends(get_api_key)])
 custom_openapi(app)
 
-@app.post("/refresh", include_in_schema=False, status_code=201)
+
+@app.post("/reload-models", include_in_schema=False, status_code=201)
 async def refresh():
+    reload_models()
     importlib.reload(usr_models)
     app.include_router(usr_models.router, dependencies=[Depends(get_api_key)])
     custom_openapi(app)

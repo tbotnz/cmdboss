@@ -15,49 +15,77 @@ from backend.models.system import (
 )
 
 from routers.route_utils import HttpErrorHandler
-from backend.util.file_mgr import FileMgr
+
 
 log = logging.getLogger(__name__)
 
 router = APIRouter()
-filemgr = FileMgr()
 
-@router.get("/models/{model_name}", response_model=ResponseBasic, status_code=200)
-@HttpErrorHandler()
-async def retrieve_model(model_name: str):
-    payload = {}
-    payload["name"] = model_name
-    payload["route_type"] = "model"
-    result = filemgr.retrieve_file(payload)
-    return jsonable_encoder(result)
 
 @router.post("/models/{model_name}", response_model=ResponseBasic, status_code=201)
 @HttpErrorHandler()
-async def create_model(model_payload: SysModelIngest, model_name: str):
-    payload = model_payload.dict(exclude_none=True)
-    payload["name"] = model_name
-    payload["route_type"] = "model"
-    result = filemgr.create_file(payload)
+async def create_model(request: Request, model_payload: SysModelIngest, model_name: str):
+    model_payload.name = model_name
+    cmdboss = CMDBOSS_db()
+    result = cmdboss.insert(model_instance_data=model_payload, path=f"{request.url}")
     # reload_routes()
     return jsonable_encoder(result)
 
-@router.delete("/models/{model_name}", status_code=204)
+
+# delete routes
+@router.delete(
+            f"/models/"+"{object_id}",
+            response_model=ResponseBasic,
+            status_code=200,
+            summary=f"Delete a single model object"
+            )
 @HttpErrorHandler()
-async def delete_model(model_name: str):
-    payload = {}
-    payload["name"] = model_name
-    payload["route_type"] = "model"
-    result = filemgr.delete_file(payload)
-    # reload_routes()
+async def delete_model(request: Request, query: Optional[CMDBOSSQuery] = None,  object_id: Optional[str] = None):
+    q = {}
+    if query:
+        q = query.dict()
+    cmdboss = CMDBOSS_db()
+    result = cmdboss.delete(query=q, object_id=object_id, path=f"{request.url}")
     return jsonable_encoder(result)
 
-@router.get("/models/", response_model=ResponseBasic, status_code=200)
+
+@router.get(
+            f"/models",
+            response_model=ResponseBasic,
+            status_code=200,
+            summary=f"Retrieve many model objects"
+            )
+@router.get(
+            f"/models/"+"{object_id}",
+            response_model=ResponseBasic,
+            status_code=200,
+            summary=f"Retrieve a single model object"
+            )
 @HttpErrorHandler()
-async def retrieve_models():
-    payload = {}
-    payload["route_type"] = "model"
-    result = filemgr.retrieve_files(payload)
+async def retrieve_models(request: Request, query: Optional[CMDBOSSQuery] = None, object_id: Optional[str] = None):
+    q = {}
+    if query:
+        q = query.dict()
+    cmdboss = CMDBOSS_db()
+    result = cmdboss.retrieve(query_obj=q, object_id=object_id, path=f"{request.url}")
     return jsonable_encoder(result)
+
+@router.patch(
+            f"/models/"+"{object_id}",
+            response_model=ResponseBasic,
+            status_code=200,
+            summary=f"Update a single model object"
+            )
+@HttpErrorHandler()
+async def update(
+                model_payload: SysModelIngest,
+                request: Request,
+                object_id: Optional[str] = None
+                ):
+    cmdboss = CMDBOSS_db()
+    result = cmdboss.update(model_instance_data=model_payload, object_id=object_id, path=f"{request.url}")
+    return jsonable_encoder(result)
+
 
 @router.post("/hooks", response_model=ResponseBasic, status_code=201)
 @HttpErrorHandler()
@@ -101,4 +129,21 @@ async def retrieve_hooks(request: Request, query: Optional[CMDBOSSQuery] = None,
         q = query.dict()
     cmdboss = CMDBOSS_db()
     result = cmdboss.retrieve(query_obj=q, object_id=object_id, path=f"{request.url}")
+    return jsonable_encoder(result)
+
+
+@router.patch(
+            f"/hooks/"+"{object_id}",
+            response_model=ResponseBasic,
+            status_code=200,
+            summary=f"Update a single hook object"
+            )
+@HttpErrorHandler()
+async def update(
+                model_payload: Hook,
+                request: Request,
+                object_id: Optional[str] = None
+                ):
+    cmdboss = CMDBOSS_db()
+    result = cmdboss.update(model_instance_data=model_payload, object_id=object_id, path=f"{request.url}")
     return jsonable_encoder(result)
