@@ -27,8 +27,8 @@ class FileMgr:
     def create_file(self, payload: Dict[str, str]):
         raw_base = base64.b64decode(payload["base64_payload"]).decode('utf-8')
         template_path = self.path_lookup[payload["route_type"]]["path"] + payload["name"] + self.path_lookup[payload["route_type"]]["extn"]
-        if os.path.exists(template_path):
-            raise CMDBOSSFileExists
+        # if os.path.exists(template_path):
+        #     raise CMDBOSSFileExists
         with open(template_path, "w") as file:
             file.write(raw_base)
         resultdata = ResponseBasic(status="success", result=[{"created": payload["name"]}]).dict()

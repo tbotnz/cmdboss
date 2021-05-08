@@ -68,7 +68,8 @@ class CMDBOSS_db:
         url_parser = {
             r"\/table/.*/": -2,
             r"\/hooks/.*": -2,
-            r"\/hooks": -1
+            r"\/hooks": -1,
+            r"\/models/.*": -2,
         }
         for key in url_parser:
             if re.search(key, path):
