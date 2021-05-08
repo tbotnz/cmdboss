@@ -1,6 +1,6 @@
 import logging
 
-from backend.cmdboss_db.cmdboss_db import CMDBOSS_db
+from backend.cmdboss_db import cmdb_oss
 
 from backend.util.file_mgr import FileMgr
 
@@ -10,9 +10,8 @@ log = logging.getLogger(__name__)
 
 def reload_models():
     q = {}
-    cmdboss = CMDBOSS_db()
     fmgr = FileMgr()
-    result = cmdboss.retrieve(query_obj=q, object_id=None, path=f"/models")
+    result = cmdb_oss.retrieve(query_obj=q, object_id=None, path=f"/models")
     # determine if reload required
     if len(result["result"]) >= 1:
         models_on_disk = fmgr.retrieve_files({"route_type": "model"})

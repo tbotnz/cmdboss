@@ -2,7 +2,7 @@ import logging
 import json
 import re
 from typing import Any
-import threading
+from concurrent.futures import ThreadPoolExecutor
 
 from pymongo import MongoClient, database
 
@@ -50,18 +50,21 @@ class CMDBOSS_db:
             payload=filter,
             model="hooks"
             )
+
         if len(hooks["result"]) >= 1:
-            for hook in hooks["result"]:
-                if len(hook["events"]) >= 1:
-                    for event in hook["events"]:
-                        if event["operation"] == operation:
-                            log.info(f"run_hooks: Webhook Executing on {operation} model {model}")
-                            send_payload = {
-                                "base64_payload": hook["base64_payload"],
-                                "payload": data
-                            }
-                            thread = threading.Thread(target=exec_hook_func, args=(send_payload,))
-                            thread.start()
+            with ThreadPoolExecutor(config.num_thread_workers) as worker_pool:
+                executions = []
+                for hook in hooks["result"]:
+                    if len(hook["events"]) >= 1:
+                        for event in hook["events"]:
+                            if event["operation"] == operation:
+                                log.info(f"run_hooks: Webhook Executing on {operation} model {model}")
+                                send_payload = {
+                                    "base64_payload": hook["base64_payload"],
+                                    "payload": data
+                                }
+                                execution = worker_pool.submit(exec_hook_func, send_payload)
+                                executions.append(execution)
 
     def get_model_name(self, path):
         path_array = path.split("/")

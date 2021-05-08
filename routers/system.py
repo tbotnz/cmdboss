@@ -5,13 +5,17 @@ from typing import Optional
 from fastapi import APIRouter, Request, Query
 from fastapi.encoders import jsonable_encoder
 
-from backend.cmdboss_db.cmdboss_db import CMDBOSS_db
+from backend.cmdboss_db import cmdb_oss
 
 from backend.models.system import (
     SysModelIngest,
     ResponseBasic,
     Hook,
     CMDBOSSQuery
+)
+
+from backend.util.exceptions import (
+    CMDBOSSHTTPException
 )
 
 from routers.route_utils import HttpErrorHandler
@@ -22,13 +26,32 @@ log = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/models/{model_name}", response_model=ResponseBasic, status_code=201)
+@router.post(
+            "/models/{model_name}",
+            response_model=ResponseBasic,
+            status_code=201
+            )
 @HttpErrorHandler()
-async def create_model(request: Request, model_payload: SysModelIngest, model_name: str):
+async def create_model(
+                    request: Request,
+                    model_payload: SysModelIngest,
+                    model_name: str
+                    ):
     model_payload.name = model_name
-    cmdboss = CMDBOSS_db()
-    result = cmdboss.insert(model_instance_data=model_payload, path=f"{request.url}")
-    # reload_routes()
+    model_exists = cmdb_oss.retrieve(
+                                    query_obj={},
+                                    object_id=None,
+                                    path=f"{request.url}"
+                                    )
+    if len(model_exists["result"]) >= 1:
+        raise CMDBOSSHTTPException(
+                                status_code=405,
+                                result="model {model_name} already exists!"
+                                )
+    result = cmdb_oss.insert(
+                            model_instance_data=model_payload,
+                            path=f"{request.url}"
+                            )
     return jsonable_encoder(result)
 
 
@@ -40,12 +63,19 @@ async def create_model(request: Request, model_payload: SysModelIngest, model_na
             summary=f"Delete a single model object"
             )
 @HttpErrorHandler()
-async def delete_model(request: Request, query: Optional[CMDBOSSQuery] = None,  object_id: Optional[str] = None):
+async def delete_model(
+                    request: Request,
+                    query: Optional[CMDBOSSQuery] = None,
+                    object_id: Optional[str] = None
+                    ):
     q = {}
     if query:
         q = query.dict()
-    cmdboss = CMDBOSS_db()
-    result = cmdboss.delete(query=q, object_id=object_id, path=f"{request.url}")
+    result = cmdb_oss.delete(
+                            query=q,
+                            object_id=object_id,
+                            path=f"{request.url}"
+                            )
     return jsonable_encoder(result)
 
 
@@ -62,13 +92,21 @@ async def delete_model(request: Request, query: Optional[CMDBOSSQuery] = None,  
             summary=f"Retrieve a single model object"
             )
 @HttpErrorHandler()
-async def retrieve_models(request: Request, query: Optional[CMDBOSSQuery] = None, object_id: Optional[str] = None):
+async def retrieve_models(
+                        request: Request,
+                        query: Optional[CMDBOSSQuery] = None,
+                        object_id: Optional[str] = None
+                        ):
     q = {}
     if query:
         q = query.dict()
-    cmdboss = CMDBOSS_db()
-    result = cmdboss.retrieve(query_obj=q, object_id=object_id, path=f"{request.url}")
+    result = cmdb_oss.retrieve(
+                            query_obj=q,
+                            object_id=object_id,
+                            path=f"{request.url}"
+                            )
     return jsonable_encoder(result)
+
 
 @router.patch(
             f"/models/"+"{object_id}",
@@ -82,17 +120,27 @@ async def update(
                 request: Request,
                 object_id: Optional[str] = None
                 ):
-    cmdboss = CMDBOSS_db()
-    result = cmdboss.update(model_instance_data=model_payload, object_id=object_id, path=f"{request.url}")
+    result = cmdb_oss.update(
+                            model_instance_data=model_payload,
+                            object_id=object_id,
+                            path=f"{request.url}"
+                            )
     return jsonable_encoder(result)
 
 
-@router.post("/hooks", response_model=ResponseBasic, status_code=201)
+@router.post(
+            "/hooks",
+            response_model=ResponseBasic,
+            status_code=201
+            )
 @HttpErrorHandler()
 async def create_hook(hook_payload: Hook, request: Request):
-    cmdboss = CMDBOSS_db()
-    result = cmdboss.insert(model_instance_data=hook_payload, path=f"{request.url}")
+    result = cmdb_oss.insert(
+                            model_instance_data=hook_payload,
+                            path=f"{request.url}"
+                            )
     return jsonable_encoder(result)
+
 
 # delete routes
 @router.delete(
@@ -102,13 +150,21 @@ async def create_hook(hook_payload: Hook, request: Request):
             summary=f"Delete a single hook object"
             )
 @HttpErrorHandler()
-async def delete(request: Request, query: Optional[CMDBOSSQuery] = None,  object_id: Optional[str] = None):
+async def delete(
+                request: Request,
+                query: Optional[CMDBOSSQuery] = None,
+                object_id: Optional[str] = None
+                ):
     q = {}
     if query:
         q = query.dict()
-    cmdboss = CMDBOSS_db()
-    result = cmdboss.delete(query=q, object_id=object_id, path=f"{request.url}")
+    result = cmdb_oss.delete(
+                            query=q,
+                            object_id=object_id,
+                            path=f"{request.url}"
+                            )
     return jsonable_encoder(result)
+
 
 @router.get(
             f"/hooks",
@@ -123,12 +179,19 @@ async def delete(request: Request, query: Optional[CMDBOSSQuery] = None,  object
             summary=f"Retrieve a single hook object"
             )
 @HttpErrorHandler()
-async def retrieve_hooks(request: Request, query: Optional[CMDBOSSQuery] = None, object_id: Optional[str] = None):
+async def retrieve_hooks(
+                        request: Request,
+                        query: Optional[CMDBOSSQuery] = None,
+                        object_id: Optional[str] = None
+                        ):
     q = {}
     if query:
         q = query.dict()
-    cmdboss = CMDBOSS_db()
-    result = cmdboss.retrieve(query_obj=q, object_id=object_id, path=f"{request.url}")
+    result = cmdb_oss.retrieve(
+                            query_obj=q,
+                            object_id=object_id,
+                            path=f"{request.url}"
+                            )
     return jsonable_encoder(result)
 
 
@@ -144,6 +207,9 @@ async def update(
                 request: Request,
                 object_id: Optional[str] = None
                 ):
-    cmdboss = CMDBOSS_db()
-    result = cmdboss.update(model_instance_data=model_payload, object_id=object_id, path=f"{request.url}")
+    result = cmdb_oss.update(
+                            model_instance_data=model_payload,
+                            object_id=object_id,
+                            path=f"{request.url}"
+                            )
     return jsonable_encoder(result)

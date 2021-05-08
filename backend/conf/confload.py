@@ -28,6 +28,7 @@ class Config:
         self.model_dir = data["model_dir"]
         self.hook_dir = data["hook_dir"]
         self.log_config_filename = data["log_config_filename"]
+        self.num_thread_workers = data["num_thread_workers"]
 
     def setup_logging(self, max_debug=False):
         with open(self.log_config_filename) as infil:
