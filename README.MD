@@ -12,14 +12,6 @@
 
 <hr/>
 
-<p align="center">
-   
-   <br/>
-   <img src="/marketecture-2.png" />
-   <br/>
-</p>
-
-
 ## Features
 
 - Model driven REST API leveraging **FastAPI** underpinned by **Python** hooks and **Mongo** DB
@@ -27,9 +19,14 @@
 - Self generating **swagger** & dynamic CRUD REST endpoints for db operations of all user defined models
 - Custom **hook** layer providing **async** hook capability on DB CRUD operations via a threaded queue
 
-## Demo
+## Concepts
 
-![cmdboss](cboss-1.gif)
+<p align="center">
+   
+   <br/>
+   <img src="/marketecture-2.png" />
+   <br/>
+</p>
 
 ## Getting Started
 
@@ -40,7 +37,10 @@
 - access swagger via ```http://127.0.0.1:9000/docs```
 - download the online [postman collection](https://documenter.getpostman.com/view/2391814/TzRPjV5h)
 
-![pman](cboss-pman.PNG)
+## Demo
+
+![cmdboss](cboss-1.gif)
+
 
 ## Roadmap
 
