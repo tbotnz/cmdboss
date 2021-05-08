@@ -26,5 +26,6 @@
 - GUI for real time model editing
 - Add Authorisation
 - Automate reloading of models
+- GraphQL support
 
 You can also find us in the channel #cmdboss on the networktocode Slack.
