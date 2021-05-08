@@ -1,4 +1,4 @@
-![cmdboss](cmdboss.PNG)
+![cmdboss](cmdboss-1.PNG)
 
 **ReST based nosql database with byo models + hooks that makes configuration management better**
 
