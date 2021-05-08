@@ -24,7 +24,7 @@
 
 #### Roadmap
 - GUI for real time model editing
-- Add Authorisation
+- Add Endpoint Authorisation
 - Automate reloading of models
 - GraphQL support
 
