@@ -8,7 +8,7 @@
 - Model driven ReST API built on FastAPI backed by a noSQLDB (Mongo)
 - BYO Pydantic Models @ Runtime over the rest interface
 - Self generating swagger & dynamic endpoints for CRUD operations for all user defined models
-- Custom middleware Layer providing async hook capability on DB CRUD operations
+- Custom middleware Layer providing async hook capability on DB CRUD operations via a threaded queue
 - BYO Python Hooks
 
 
@@ -27,6 +27,5 @@
 - Add Endpoint Authorisation
 - Automate reloading of models
 - GraphQL support
-- Implement threadpooling
 
 You can also find us in the channel #cmdboss on the networktocode Slack.
