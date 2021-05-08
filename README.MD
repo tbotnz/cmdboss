@@ -2,7 +2,7 @@
 
 <p align="center">
    <br/>
-   <img src="/cmdboss-1.PNG" />
+   <img src="/cmdboss.PNG" />
    <br/>
    <p align="center">
     ReST based nosql database with byo models + hooks that makes configuration management better
